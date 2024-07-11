@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: the-nginx-app
-          image: nginx
+          image: nginx  # replace with app-py. How to get image from local registry?
           ports:
             - containerPort: 80
