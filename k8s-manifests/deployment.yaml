@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-nginx-app-deployment
+  name: test-app-deployment
   labels:
     app: andrey
 spec:
@@ -15,7 +15,13 @@ spec:
         app: andrey
     spec:
       containers:
-        - name: the-nginx-app
-          image: nginx  # replace with app-py. How to get image from local registry?
+        - name: app-py
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: app-py:1.0.1
+          args: ["--message", "Hello from \"$(MY_POD_NAME)\""]
           ports:
-            - containerPort: 80
+            - containerPort: 8000
