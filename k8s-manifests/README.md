@@ -2,7 +2,7 @@
 
 Deploy everything:
 ```bash
-kubectl apply -f deployment.yaml -f service.yaml
+kubectl apply -f namespace.yaml -f deployment.yaml -f service.yaml
 ```
 
 Verify:
@@ -12,8 +12,7 @@ kubectl get pod
 kubectl get service
 ```
 
-Cleanup:
+Cleanup (takes some time). Delete the namespace to delete all from it:
 ```bash
-kubectl delete deploy ...
-kubectl delete service ...
+kubectl delete -f namespace.yaml
 ```
