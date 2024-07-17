@@ -22,7 +22,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-          image: app-py:1.0.1
+          image: app-py:1.0.0
           args: ["--message", "Hello from \"$(MY_POD_NAME)\""]
           ports:
             - containerPort: 8000
