@@ -6,7 +6,7 @@ metadata:
   labels:
     app: andrey
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: andrey
@@ -22,7 +22,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-          image: app-py:1.0.0
+          image: app-py:1.0.0  # don't use 'latest' as it wants to go to DockerHub for the latest
           args: ["--message", "Hello from \"$(MY_POD_NAME)\""]
           ports:
             - containerPort: 8000
