@@ -33,6 +33,12 @@ Via ephemeral pod:
 kubectl run --rm -it busybox --image=busybox:latest --restart=Never -n=dev
 ```
 
+From existing pod:
+```bash
+kubectl exec POD_NAME -n=dev -- curl IP
+```
+where `IP` is the IP and exposed port of (other) pods.
+
 ## Clean up
 Delete the namespace to delete everything in it:
 ```bash
