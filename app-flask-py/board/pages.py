@@ -17,9 +17,12 @@ def fetch_timestamp_sync(default="no time"):
     if (not backend_url):
         return default
 
-    r = requests.get(current_app.config["BACKEND_ENDPOINT"])
-    if (r.status_code != 200):
-        return f"Error: {r.status_code}"
+    try:
+        r = requests.get(current_app.config["BACKEND_ENDPOINT"])
+        if (r.status_code != 200):
+            return f"Error: {r.status_code}"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
     timestamp = r.json().get('time')
     worker = r.json().get('worker')

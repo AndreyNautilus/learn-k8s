@@ -1,22 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app-deployment
+  name: deployment-app-py
   namespace: dev
-  labels:
-    app: andrey
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: andrey
+      app: app-py  # for ReplicaSet to know which pods to manage
   template:
     metadata:
       labels:
-        app: andrey
+        app: app-py
     spec:
       containers:
-        - name: app-py
+        - name: app
           env:
             - name: MY_POD_NAME
               valueFrom:

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-app-flask
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-flask  # for ReplicaSet to know which pods to manage
+  template:
+    metadata:
+      labels:
+        app: app-flask
+    spec:
+      containers:
+        - name: backend
+          env:
+            - name: SERVICE_PORT
+              value: '8005'
+            - name: WORKER_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          image: app-flask-py:1.0.0  # don't use 'latest' as it wants to go to DockerHub for the latest
+          ports:
+            - name: backend
+              containerPort: 8005
+        - name: frontend
+          env:
+            - name: SERVICE_PORT
+              value: '8000'
+            - name: BACKEND_ENDPOINT
+              value: http://localhost:8005/backend/time
+          image: app-flask-py:1.0.0
+          ports:
+            - name: frontend
+              containerPort: 8000

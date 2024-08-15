@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-app-flask
+  namespace: dev
+spec:
+  type: LoadBalancer
+  selector:
+    app: app-flask
+  ports:
+    - name: frontend
+      protocol: TCP
+      port: 80
+      targetPort: frontend  # see exposed port in container
+    - name: backend
+      protocol: TCP
+      port: 8005
+      targetPort: backend  # see exposed port in container
