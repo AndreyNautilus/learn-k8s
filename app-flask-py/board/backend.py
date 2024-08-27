@@ -1,15 +1,19 @@
-from flask import Blueprint, current_app
+from flask import Blueprint, current_app, request
 from datetime import datetime
+import urllib.parse
 
 backend_bp = Blueprint("backend", __name__, url_prefix="/backend")
 
 
 @backend_bp.route("/time", methods=("GET",))
 def time():
-    msg = datetime.now().strftime("%m/%d/%Y - %H:%M:%S")
+    time_msg = datetime.now().strftime("%m/%d/%Y - %H:%M:%S")
+    worker = current_app.config["WORKER_NAME"]
+    msg = urllib.parse.unquote_plus(request.args.get("msg", "no msg"))
     return {
-        'time': msg,
-        'worker': current_app.config["WORKER_NAME"]
+        'time': time_msg,
+        'worker': f"{worker} - {msg}",
+        'echo': msg
     }
 
 
