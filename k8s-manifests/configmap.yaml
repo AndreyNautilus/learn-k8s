@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap
+  name: configmap-test
+  namespace: dev
 data:
   purpose: learning-k8s
