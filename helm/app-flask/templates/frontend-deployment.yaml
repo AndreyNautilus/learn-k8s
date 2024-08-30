@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-frontend
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-frontend  # for ReplicaSet to know which pods to manage
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-frontend
+    spec:
+      containers:
+        - name: frontend
+          env:
+            - name: BACKEND_ENDPOINT
+              value: "http://{{ .Values.appName }}-backend:8000/backend/time"
+            - name: BACKEND_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: {{ .Values.appName }}-secret
+            - name: BACKEND_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: {{ .Values.appName }}-secret
+            - name: BACKEND_SECRET
+              value: $(BACKEND_USERNAME)/$(BACKEND_PASSWORD)
+          image: app-flask-py:1.0.0
+          ports:
+            - name: frontend
+              containerPort: 8000

@@ -1,0 +1,3 @@
+app-flask consists of a frontend and a backend.
+Frontend is exposed on port 80 from the cluster ( http://localhost ),
+while backend is strictly internal (not accessible without tunneling).

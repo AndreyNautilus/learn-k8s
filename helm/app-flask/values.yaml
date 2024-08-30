@@ -1,0 +1,11 @@
+namespace: dev
+
+appName: app-flask
+
+image:
+  name: app-flask-py  # local image, built from app-flask-py dir
+  tag: "1.0.0"  # not "latest" so k8s doesn't query DockerHub
+
+configmap:
+  data:
+    purpose: "learn-k8s-dev"
