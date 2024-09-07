@@ -28,4 +28,7 @@ And install it manually:
 
 ```bash
 kubectl apply -f components-v0.7.2.yaml
+
+# check it
+kubectl top pods
 ```
