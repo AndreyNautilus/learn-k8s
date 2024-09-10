@@ -15,6 +15,13 @@ spec:
     spec:
       containers:
         - name: frontend
+          resources:
+            # requests are taken from 'kubectl top pods -n=dev' and rounded up
+            # requests are equal to limits
+            limits:
+              # equal to requests
+              cpu: 100m
+              memory: 100Mi
           env:
             - name: BACKEND_ENDPOINT
               value: "http://{{ .Values.appName }}-backend:8000/backend/time"

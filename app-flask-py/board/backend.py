@@ -1,6 +1,7 @@
 from flask import Blueprint, current_app, request
 from datetime import datetime
 import urllib.parse
+import math
 
 backend_bp = Blueprint("backend", __name__, url_prefix="/backend")
 
@@ -15,6 +16,17 @@ def time():
         'worker': f"{worker} - {msg}",
         'echo': msg
     }
+
+
+@backend_bp.route("/stress", methods=("Get",))
+def stress():
+    ticks = int(request.args.get("ticks", 1000000))
+
+    res = 0
+    for i in range(ticks):
+        res = (res + i * math.sqrt(65) % 17) % 23
+
+    return f"Done: {res}"
 
 
 @backend_bp.route("/crash")

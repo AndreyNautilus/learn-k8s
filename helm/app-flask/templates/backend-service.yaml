@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.appName }}-backend
   namespace: {{ .Values.namespace }}
 spec:
+  type: LoadBalancer  # temporary, to test HPA
   selector:
     app: {{ .Values.appName }}-backend
   ports:

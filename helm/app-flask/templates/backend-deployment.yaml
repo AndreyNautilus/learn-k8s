@@ -15,14 +15,12 @@ spec:
     spec:
       containers:
         - name: backend
-          # TODO: how to measure required resources?
-          # resources:
-          #   requests:
-          #     cpu: "0.5"        # https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/
-          #     memory: "100Mi"   # https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
-          #   limits:
-          #     cpu: "1"          # https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/
-          #     memory: "200Mi"   # https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
+          resources:
+            # requests are taken from 'kubectl top pods -n=dev' and rounded up
+            # requests are equal to limits
+            limits:
+              cpu: 500m
+              memory: 200Mi
           env:
             - name: POD_NAME
               valueFrom:

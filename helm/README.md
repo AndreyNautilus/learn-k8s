@@ -2,6 +2,9 @@
 
 ## Prerequesites
 
+We need [metrics server](https://github.com/kubernetes-sigs/metrics-server),
+see `k8s-manifests/metrics-server` for details.
+
 We need a `dev` namespace in the cluster (preferably empty):
 ```bash
 kubectl create namespace dev

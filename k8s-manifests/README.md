@@ -42,3 +42,22 @@ or
 ```bash
 kubectl delete dev
 ```
+
+## Generate fake load
+
+# simple low load
+
+Just make a request every second. fish shell:
+```bash
+while true;
+    date && curl -I http://localhost;
+    sleep 1s;
+end
+```
+
+# high load
+
+Use `wrk` [tool](https://github.com/wg/wrk):
+```bash
+wrk --connections 10 --threads 10 --duration 5m -H "Connection: Close" "http://localhost:8000/backend/stress"
+```
