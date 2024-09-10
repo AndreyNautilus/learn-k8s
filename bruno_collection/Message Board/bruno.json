@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Message Board",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

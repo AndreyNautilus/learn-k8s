@@ -1,0 +1,15 @@
+meta {
+  name: stress short
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/backend/stress?ticks=123
+  body: none
+  auth: none
+}
+
+params:query {
+  ticks: 123
+}
