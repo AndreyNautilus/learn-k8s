@@ -9,6 +9,5 @@ def create_app():
     app.config.from_pyfile('config.py')
 
     app.register_blueprint(pages.pages_bp)
-    app.register_blueprint(backend.backend_bp)
     
     return app

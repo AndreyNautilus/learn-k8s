@@ -24,12 +24,13 @@ def stress():
 
     res = 0
     for i in range(ticks):
-        res = (res + i * math.sqrt(65) % 17) % 23
+        res = (res + i * math.sqrt(65) % 17) % 23  # some "heavy" computation
 
     return f"Done: {res}"
 
 
 @backend_bp.route("/crash")
 def crash():
+    # TODO: how to crash the service?
     raise RuntimeError("Requested crash")
     return "crash"
