@@ -1,16 +1,7 @@
-# Web app using Python Flask
+# Web app
 
-Uses [flask](https://flask.palletsprojects.com/en/3.0.x/).
-
-Backend
-```bash
-$env:WORKER_NAME="local_dev"; python -m flask --app=board run --port=8001 --debug
-```
-
-Frontend
-```bash
-$env:BACKEND_ENDPOINT="http://localhost:8001/backend/time"; python -m flask --app=board run --port=8000 --debug
-```
+- **frontend** serves html pages
+- **backend** handles the logic
 
 ## Single container with localhost backend endpoint
 

@@ -3,19 +3,23 @@ from datetime import datetime
 import urllib.parse
 import math
 
-backend_bp = Blueprint("backend", __name__, url_prefix="/backend")
+backend_bp = Blueprint("backend", __name__)
 
 
-@backend_bp.route("/time", methods=("GET",))
-def time():
+@backend_bp.route("/info", methods=("GET",))
+def info():
     time_msg = datetime.now().strftime("%m/%d/%Y - %H:%M:%S")
     worker = current_app.config["WORKER_NAME"]
-    msg = urllib.parse.unquote_plus(request.args.get("msg", "no msg"))
-    return {
+
+    result = {
         'time': time_msg,
-        'worker': f"{worker} - {msg}",
-        'echo': msg
+        'worker': worker,
     }
+
+    for key, value in request.args.items():
+        result.setdefault('params', {})[urllib.parse.unquote_plus(key)] = urllib.parse.unquote_plus(value)
+
+    return result
 
 
 @backend_bp.route("/stress", methods=("Get",))
@@ -24,7 +28,7 @@ def stress():
 
     res = 0
     for i in range(ticks):
-        res = (res + i * math.sqrt(65) % 17) % 23  # some "heavy" computation
+        res = (res + int(math.sqrt(i * 65)) % 17) % 23  # some "heavy" computation
 
     return f"Done: {res}"
 
