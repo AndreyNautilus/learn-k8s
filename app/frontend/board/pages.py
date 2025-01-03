@@ -24,16 +24,19 @@ def fetch_timestamp_sync(default="no time"):
         params["msg"] = urllib.parse.quote_plus(backend_secret)
 
     try:
-        r = requests.get(current_app.config["BACKEND_ENDPOINT"], params=params)
+        r = requests.get(backend_url + "/info", params=params)
         if (r.status_code != 200):
             return f"Error: {r.status_code}"
     except Exception as e:
         return f"Error: {str(e)}"
 
-    timestamp = r.json().get('time')
-    worker = r.json().get('worker')
+    r_json = r.json()
 
-    return f"{timestamp} ({worker})"
+    result = f"{r_json.get('time', 'no time')} ({r_json.get('worker', 'no worker')})"
+    echoed_msg = r_json.get('params', {}).get('msg')
+    if echoed_msg:
+        result += f" - {echoed_msg}"
+    return result
 
 
 @pages_bp.route("/about")
