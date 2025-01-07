@@ -4,6 +4,6 @@
 
 Simple web server written in python. Dockerfile included.
 
-## app-flask-py
+## app
 
-Fontend + backend web app written in python with `flask` framework.
+Micro-services based web app. See the [README](app/README.md) for details.
