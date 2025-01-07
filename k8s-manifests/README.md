@@ -1,7 +1,10 @@
 # K8s manifests
 
 ## Preparation
+
 Docker images should be published at least locally.
+
+Cluster should include required tools, see [cluster-setup](cluster-setup/README.md).
 
 ## Deploy and verify
 
