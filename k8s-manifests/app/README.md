@@ -8,4 +8,8 @@
 ```bash
 kubectl -n dev apply .  # to deploy everything
 kubectl -n dev get all  # list created resources
+
+# check the "small load" logs (use '-f' to follow logs)
+kubectl -n dev logs backend-small-load
+kubectl -n dev logs frontend-small-load
 ```
