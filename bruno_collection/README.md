@@ -4,3 +4,7 @@
 - import collection
 - select environment
 - right-click collection -> Run
+
+## Environments
+
+- **docker** - for docker-compose setup
