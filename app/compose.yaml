@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: backend
+    environment:
+      WORKER_NAME: compose_dev
+    ports:
+      - "8001:8000"  # expose port to host
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+  frontend:
+    build: frontend
+    environment:
+      BACKEND_ENDPOINT: "http://backend:8000"  # uses the original (not exposed) port
+    ports:
+      - "8000:8000"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+  backend-load:
+    image: busybox
+    command: ['sh', '-c', 'while true; do wget -q -O- http://backend:8000/info; sleep 5; done']
+  frontend-load:
+    image: busybox
+    command: ['sh', '-c', 'while true; do wget -Sq -O- http://frontend:8000/about >> /dev/null; sleep 5; done']
