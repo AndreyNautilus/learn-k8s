@@ -13,3 +13,8 @@ kubectl -n dev get all  # list created resources
 kubectl -n dev logs backend-small-load
 kubectl -n dev logs frontend-small-load
 ```
+
+Ingress serves just on localhost:
+```bash
+curl localhost  # should return home page html
+```
