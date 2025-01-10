@@ -1,4 +1,4 @@
-# helm charts
+# helm charts (DROPPED)
 
 ## Prerequesites
 
