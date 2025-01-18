@@ -1,7 +1,6 @@
-from flask import Blueprint, current_app, request
+from flask import abort, Blueprint, current_app, request
 from datetime import datetime
 import urllib.parse
-import math
 
 backend_bp = Blueprint("backend", __name__)
 
@@ -22,19 +21,40 @@ def info():
     return result
 
 
-@backend_bp.route("/stress", methods=("Get",))
-def stress():
-    ticks = int(request.args.get("ticks", 1000000))
+@backend_bp.route("/posts", methods=("GET", "POST"))
+def posts():
+    if request.method == "GET":
+        return fetch_posts()
 
-    res = 0
-    for i in range(ticks):
-        res = (res + int(math.sqrt(i * 65)) % 17) % 23  # some "heavy" computation
-
-    return f"Done: {res}"
+    if request.method == "POST":
+        return add_post(request)
 
 
-@backend_bp.route("/crash")
-def crash():
-    # TODO: how to crash the service?
-    raise RuntimeError("Requested crash")
-    return "crash"
+def fetch_posts():
+    posts = [
+        {
+            'author': 'user 1',
+            'text': 'text 1'
+        },
+        {
+            'author': 'user 2',
+            'text': 'text 2'
+        },
+        {
+            'author': 'user 3',
+            'text': 'text 3'
+        },
+    ]
+    return posts
+
+
+def add_post(request):
+    if request.json == None:
+        return abort(400, description='Data must not be empty')
+
+    author = request.json.get('author')
+    text = request.json.get('text')
+
+    current_app.logger.info(f"Add post: author='{author}', text='{text}'")
+
+    return "Success", 200

@@ -1,7 +1,6 @@
 import json
 import os
 from unittest import mock
-import pytest
 
 from board import create_app
 from board.config import DEFAULT_WORKER_NAME
@@ -35,17 +34,26 @@ def test_info():
     assert res['params'] == params
 
 
-@pytest.mark.parametrize("ticks,result", (
-    (6, 3),
-    (10, 21)))
-def test_stress(test_client, ticks, result):
-    response = test_client.get(f'/stress?ticks={ticks}')
-    res = response.data.decode('utf-8')
+@mock.patch('board.backend.fetch_posts', return_value=[{'author': 'name', 'text': 'post'}])
+def test_posts_get(fetch_posts, test_client):
+    response = test_client.get('/posts')
 
-    expected = f"Done: {result}"
-    assert res[:len(expected)] == expected
+    assert response.status_code == 200
+    fetch_posts.assert_called_once()
+
+    res = json.loads(response.data.decode('utf-8'))
+    assert res == fetch_posts.return_value
 
 
-def test_crash(test_client):
-    response = test_client.get('/crash')
-    assert response.status_code == 500
+def test_posts_post(test_client):
+    data = {
+        'author': 'test-author',
+        'text': 'test text'
+    }
+
+    response = test_client.post(
+        '/posts',
+        data=json.dumps(data),
+        content_type='application/json')
+
+    assert response.status_code == 200
