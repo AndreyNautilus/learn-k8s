@@ -1,0 +1,15 @@
+meta {
+  name: posts - GET
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{backendUrl}}/stress?ticks=123
+  body: none
+  auth: none
+}
+
+params:query {
+  ticks: 123
+}

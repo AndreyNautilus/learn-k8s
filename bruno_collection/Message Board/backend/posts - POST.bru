@@ -1,0 +1,22 @@
+meta {
+  name: posts - POST
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{backendUrl}}/addpost
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    'author': 'user',
+    'text': 'message'
+  }
+}
