@@ -30,7 +30,15 @@ def posts():
         return _get_posts()
 
     if request.method == "POST":
-        return _add_post(request)
+        if request.json == None:
+            return abort(400, description='Data must not be empty')
+
+        author = request.json.get('author')
+        text = request.json.get('text')
+
+        _add_post(author, text)
+
+        return "Success", 200
 
 
 def _get_db_connection():
@@ -94,13 +102,7 @@ def _fetch_posts(connection):
         return posts
 
 
-def _add_post(request):
-    if request.json == None:
-        return abort(400, description='Data must not be empty')
-
-    author = request.json.get('author')
-    text = request.json.get('text')
-
+def _add_post(author, text):
     connection = _get_db_connection()
     if connection:
         with connection:
@@ -108,8 +110,6 @@ def _add_post(request):
            _insert_post(connection, author, text)
     else:
         current_app.logger.info(f"Fake-Add post: author='{author}', text='{text}'")
-
-    return "Success", 200
 
 
 def _find_author_id(cursor, author_name):
