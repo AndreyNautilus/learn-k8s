@@ -1,11 +1,11 @@
-CREATE DATABASE msgs;
+CREATE DATABASE IF NOT EXISTS msgs;
 USE msgs;
 
-CREATE TABLE authors (
+CREATE TABLE IF NOT EXISTS authors (
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name text NOT NULL
 );
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts (
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     author_id int NOT NULL REFERENCES authors(id),
     message text
