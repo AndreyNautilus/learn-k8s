@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{backendUrl}}/addpost
+  url: {{backendUrl}}/posts
   body: json
   auth: none
 }
@@ -16,7 +16,7 @@ headers {
 
 body:json {
   {
-    'author': 'user',
-    'text': 'message'
+    "author": "user",
+    "text": "message"
   }
 }
