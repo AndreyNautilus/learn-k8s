@@ -41,6 +41,14 @@ repos:
         args: [--fix]
       - id: ruff-format  # Run the formatter.
 
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: "3.3.0"
+    hooks:
+      - id: sqlfluff-lint
+        args: [--dialect, mysql]
+      - id: sqlfluff-fix
+        args: [--dialect, mysql]
+
   # TODO:
   # dockerfile lint
   # k8s manifests lint
