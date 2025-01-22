@@ -13,6 +13,7 @@ helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dash
 Access guide (create a simple admin user): https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 
 Create a service account, bind the role and create a secret:
+
 ```bash
 kubectl apply -f admin-dashboard-user.yaml
 ```

@@ -1,11 +1,12 @@
 # helm charts (DROPPED)
 
-## Prerequesites
+## Prerequisites
 
 We need [metrics server](https://github.com/kubernetes-sigs/metrics-server),
 see `k8s-manifests/metrics-server` for details.
 
 We need a `dev` namespace in the cluster (preferably empty):
+
 ```bash
 kubectl create namespace dev
 ```
@@ -16,6 +17,7 @@ kubectl create namespace dev
 helm install app-flask app-flask -n=dev
 helm upgrade app-flask app-flask -n=dev
 ```
+
 the first "app-flask" is the name of the chart, the second - the folder.
 
 ## Cleanup

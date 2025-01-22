@@ -17,7 +17,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
             datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
         ]
         self.wfile.write(" - ".join(page_line).encode("utf-8"))
-        
+
     def do_POST(self):
         pass
 
@@ -35,7 +35,7 @@ def main():
 
     httpd = ThreadingHTTPServer(('', args.port), SimpleHandler)
     httpd.page_message = args.message
-    
+
     logging.info(f"Start serving on port {args.port} ...")
     httpd.serve_forever()
 

@@ -24,18 +24,18 @@ spec:
           env:
             - name: BACKEND_ENDPOINT
               value: "http://app-backend:8000"
-            # - name: BACKEND_USERNAME
-            #   valueFrom:
-            #     secretKeyRef:
-            #       key: username
-            #       name: app-secret
-            # - name: BACKEND_PASSWORD
-            #   valueFrom:
-            #     secretKeyRef:
-            #       key: password
-            #       name: app-secret
-            # - name: BACKEND_SECRET
-            #   value: $(BACKEND_USERNAME)/$(BACKEND_PASSWORD)
+              # - name: BACKEND_USERNAME
+              #   valueFrom:
+              #     secretKeyRef:
+              #       key: username
+              #       name: app-secret
+              # - name: BACKEND_PASSWORD
+              #   valueFrom:
+              #     secretKeyRef:
+              #       key: password
+              #       name: app-secret
+              # - name: BACKEND_SECRET
+              #   value: $(BACKEND_USERNAME)/$(BACKEND_PASSWORD)
           image: app-frontend:1.0.0
           ports:
             - name: frontend
@@ -58,7 +58,6 @@ kind: Service
 metadata:
   name: app-frontend
 spec:
-  #type: LoadBalancer
   selector:
     app: app-frontend
   ports:

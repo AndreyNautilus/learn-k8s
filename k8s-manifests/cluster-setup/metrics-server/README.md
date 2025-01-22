@@ -3,12 +3,13 @@
 https://github.com/kubernetes-sigs/metrics-server
 
 We can't use [helm chart](https://artifacthub.io/packages/helm/metrics-server/metrics-server)
-for installing into Docker Desktop, because metrics-server requries
+for installing into Docker Desktop, because metrics-server requires
 a signed TLS certificate, which we don't have yet. Helm chart doesn't provide a config option
 to bypass this requirement.
 
 We have to download k8s manifest file from a [GitHub release](https://github.com/kubernetes-sigs/metrics-server/releases),
 patch it:
+
 ```diff
 diff --git a/k8s-manifests/metrics-server/components-v0.7.2.yaml b/k8s-manifests/metrics-server/components-v0.7.2.yaml
 index 91c2dc8..60082c1 100644

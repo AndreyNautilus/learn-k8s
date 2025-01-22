@@ -11,9 +11,9 @@ spec:
   maxReplicas: 10
   # behavior: - keep the default policies
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
