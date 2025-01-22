@@ -24,7 +24,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("port", type=int, nargs='?', default=8000)
+    parser.add_argument("port", type=int, nargs="?", default=8000)
     parser.add_argument("--message", type=str, default="Hello, world!")
     args = parser.parse_args()
 
@@ -33,7 +33,7 @@ def main():
 
     logging.info(f"Message: {args.message}")
 
-    httpd = ThreadingHTTPServer(('', args.port), SimpleHandler)
+    httpd = ThreadingHTTPServer(("", args.port), SimpleHandler)
     httpd.page_message = args.message
 
     logging.info(f"Start serving on port {args.port} ...")

@@ -12,14 +12,14 @@ def info():
     worker = current_app.config["WORKER_NAME"]
 
     result = {
-        'time': time_msg,
-        'worker': worker,
+        "time": time_msg,
+        "worker": worker,
     }
 
     for key, value in request.args.items():
         safe_key = urllib.parse.unquote_plus(key)
         safe_value = urllib.parse.unquote_plus(value)
-        result.setdefault('params', {})[safe_key] = safe_value
+        result.setdefault("params", {})[safe_key] = safe_value
 
     return result
 
@@ -30,11 +30,11 @@ def posts():
         return _get_posts()
 
     if request.method == "POST":
-        if request.json == None:
-            return abort(400, description='Data must not be empty')
+        if request.json is None:
+            return abort(400, description="Data must not be empty")
 
-        author = request.json.get('author')
-        text = request.json.get('text')
+        author = request.json.get("author")
+        text = request.json.get("text")
 
         _add_post(author, text)
 
@@ -47,11 +47,11 @@ def _get_db_connection():
     # - connection pool
     # - different connections for read/write operations. Is it really needed?
     db_connection_config = {
-        'host': current_app.config["DATABASE_URL"],
-        'port': current_app.config["DATABASE_PORT"],
-        'database': current_app.config["DATABASE_NAME"],
-        'user': current_app.config["DATABASE_USERNAME"],
-        'password': current_app.config["DATABASE_PASSWORD"],
+        "host": current_app.config["DATABASE_URL"],
+        "port": current_app.config["DATABASE_PORT"],
+        "database": current_app.config["DATABASE_NAME"],
+        "user": current_app.config["DATABASE_USERNAME"],
+        "password": current_app.config["DATABASE_PASSWORD"],
     }
     if any(not bool(v) for v in db_connection_config.values()):
         return None
@@ -70,18 +70,9 @@ def _get_posts():
 
 def _fake_posts():
     posts = [
-        {
-            'author': 'fake user 1',
-            'text': 'fake text 1'
-        },
-        {
-            'author': 'fake user 2',
-            'text': 'fake text 2'
-        },
-        {
-            'author': 'fake user 3',
-            'text': 'fake text 3'
-        },
+        {"author": "fake user 1", "text": "fake text 1"},
+        {"author": "fake user 2", "text": "fake text 2"},
+        {"author": "fake user 3", "text": "fake text 3"},
     ]
     return posts
 
@@ -92,12 +83,13 @@ def _fetch_posts(connection):
             "SELECT authors.name AS author, posts.message AS text "
             "FROM posts "
             "INNER JOIN authors "
-            "ON posts.author_id = authors.id")
+            "ON posts.author_id = authors.id"
+        )
         cursor.execute(query)
 
         posts = []
-        for (author, message) in cursor:
-            posts.append({'author': author, 'text': message})
+        for author, message in cursor:
+            posts.append({"author": author, "text": message})
 
         return posts
 
@@ -106,8 +98,8 @@ def _add_post(author, text):
     connection = _get_db_connection()
     if connection:
         with connection:
-           current_app.logger.info(f"Add post: author='{author}', text='{text}'")
-           _insert_post(connection, author, text)
+            current_app.logger.info(f"Add post: author='{author}', text='{text}'")
+            _insert_post(connection, author, text)
     else:
         current_app.logger.info(f"Fake-Add post: author='{author}', text='{text}'")
 
@@ -137,8 +129,6 @@ def _insert_post(connection, author, text):
         author_id = _upsert_author(cursor, author)
         print(f"Author_id = {author_id}")
 
-        insert_message_query = (
-            "INSERT INTO posts (author_id, message) "
-            "VALUES (%s, %s)")
+        insert_message_query = "INSERT INTO posts (author_id, message) VALUES (%s, %s)"
         cursor.execute(insert_message_query, (author_id, text))
         connection.commit()  # TODO: can it be called here or should it be called on a higher level?

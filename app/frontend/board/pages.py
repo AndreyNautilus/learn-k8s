@@ -16,7 +16,7 @@ def home():
 
 def _fetch_timestamp_sync(default="no time"):
     backend_url = current_app.config.get("BACKEND_ENDPOINT")
-    if (not backend_url):
+    if not backend_url:
         return default
 
     params = {}
@@ -26,7 +26,7 @@ def _fetch_timestamp_sync(default="no time"):
 
     try:
         r = requests.get(backend_url + "/info", params=params)
-        if (r.status_code != 200):
+        if r.status_code != 200:
             return f"Error: {r.status_code}"
     except Exception as e:
         return f"Error: {str(e)}"
@@ -34,7 +34,7 @@ def _fetch_timestamp_sync(default="no time"):
     r_json = r.json()
 
     result = f"{r_json.get('time', 'no time')} ({r_json.get('worker', 'no worker')})"
-    echoed_msg = r_json.get('params', {}).get('msg')
+    echoed_msg = r_json.get("params", {}).get("msg")
     if echoed_msg:
         result += f" - {echoed_msg}"
     return result
@@ -42,14 +42,14 @@ def _fetch_timestamp_sync(default="no time"):
 
 def _fetch_posts():
     backend_url = current_app.config.get("BACKEND_ENDPOINT")
-    if (not backend_url):
+    if not backend_url:
         return []
 
     try:
         r = requests.get(backend_url + "/posts")
-        if (r.status_code != 200):
+        if r.status_code != 200:
             return []
-    except Exception as e:
+    except Exception:
         return []
 
     return r.json()
