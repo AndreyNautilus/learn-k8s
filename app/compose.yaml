@@ -6,8 +6,18 @@ services:
     volumes:
       - ./db/db.sql:/docker-entrypoint-initdb.d/db.sql
       - ./db/test-data.sql:/docker-entrypoint-initdb.d/test-data.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
   backend:
     build: backend
+    depends_on:
+      backend-db:
+        condition: service_healthy
+        restart: true
     environment:
       WORKER_NAME: compose_dev
       DATABASE_URL: backend-db
@@ -23,7 +33,11 @@ services:
       - "8000:8000"
   backend-load:
     image: busybox
+    depends_on:
+      - backend
     command: ['sh', '-c', 'while true; do wget -q -O- http://backend:8000/info; sleep 5; done']
   frontend-load:
     image: busybox
+    depends_on:
+      - frontend
     command: ['sh', '-c', 'while true; do wget -Sq -O- http://frontend:8000/about >> /dev/null; sleep 5; done']

@@ -10,6 +10,11 @@
     {{ timestamp }}
   </p>
 {% endif %}
+{% for post in posts %}
+  <p>
+    <b>{{ post['author'] }}:</b> {{ post['text'] }}
+  </p>
+{% endfor %}
   <p>
     Learn more about this project by visiting the <a href="{{ url_for('pages.about') }}">About page</a>.
   </p>

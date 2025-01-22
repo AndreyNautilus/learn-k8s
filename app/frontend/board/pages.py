@@ -9,11 +9,12 @@ pages_bp = Blueprint("pages", __name__)
 def home():
     # TODO: use async here?
     # See: https://docs.python-requests.org/en/latest/user/advanced/#blocking-or-non-blocking
-    timestamp = fetch_timestamp_sync()
-    return render_template("pages/home.html", timestamp=timestamp)
+    timestamp = _fetch_timestamp_sync()
+    posts = _fetch_posts()
+    return render_template("pages/home.html", timestamp=timestamp, posts=posts)
 
 
-def fetch_timestamp_sync(default="no time"):
+def _fetch_timestamp_sync(default="no time"):
     backend_url = current_app.config.get("BACKEND_ENDPOINT")
     if (not backend_url):
         return default
@@ -37,6 +38,21 @@ def fetch_timestamp_sync(default="no time"):
     if echoed_msg:
         result += f" - {echoed_msg}"
     return result
+
+
+def _fetch_posts():
+    backend_url = current_app.config.get("BACKEND_ENDPOINT")
+    if (not backend_url):
+        return []
+
+    try:
+        r = requests.get(backend_url + "/posts")
+        if (r.status_code != 200):
+            return []
+    except Exception as e:
+        return []
+
+    return r.json()
 
 
 @pages_bp.route("/about")
