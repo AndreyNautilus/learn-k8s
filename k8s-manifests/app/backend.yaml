@@ -54,7 +54,6 @@ kind: Service
 metadata:
   name: app-backend
 spec:
-  #type: LoadBalancer  # temporary, to test HPA
   selector:
     app: app-backend
   ports:

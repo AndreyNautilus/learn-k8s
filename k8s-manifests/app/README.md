@@ -15,6 +15,7 @@ kubectl -n dev logs frontend-small-load
 ```
 
 Ingress serves just on localhost:
+
 ```bash
 curl localhost  # should return home page html
 ```

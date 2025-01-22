@@ -1,0 +1,14 @@
+extends: default
+
+ignore:
+  - "**/.venv"
+  - helm/app-flask/templates
+  - k8s-manifests/cluster-setup/metrics-server/components-v0.7.2.yaml
+
+rules:
+  document-start: disable  # personal
+  line-length:
+    max: 100
+  new-lines: disable  # mix of win and unix endlines
+  truthy:
+    check-keys: false  # to allow Github 'on:' syntax

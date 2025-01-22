@@ -6,9 +6,12 @@ metadata:
   name: frontend-small-load
 spec:
   containers:
-  - image: busybox
-    name: busybox
-    command: ['sh', '-c', 'while true; do wget -Sq -O- http://app-frontend:8000/about; sleep 5; done']
-    resources: {}
+    - image: busybox
+      name: busybox
+      command:
+        - sh
+        - -c
+        - while true; do wget -Sq -O- http://app-frontend:8000/about; sleep 5; done
+      resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always

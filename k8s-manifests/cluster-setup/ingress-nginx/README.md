@@ -13,6 +13,7 @@ helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.git
 ```
 
 Check:
+
 ```bash
 kubectl -n ingress-nginx get all
 # Should list:
