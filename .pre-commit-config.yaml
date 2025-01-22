@@ -51,4 +51,4 @@ repos:
 
   # TODO:
   # dockerfile lint
-  # k8s manifests lint
+  # k8s manifests lint: https://github.com/stackrox/kube-linter
