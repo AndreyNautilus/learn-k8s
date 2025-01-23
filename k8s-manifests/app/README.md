@@ -1,7 +1,24 @@
 # app manifests
 
+```mermaid
+flowchart LR
+    frontend@{shape: procs}
+    backend@{shape: procs}
+    app_db[(app-db)]
+
+    subgraph cluster
+        direction LR
+        frontend --> backend
+        backend --> app_db
+    end
+
+    traffic[http localhost] --> cluster
+```
+
 - `backend.yaml` and `frontend.yaml` - deployments and services for backend and frontend
 - `backend-*.yaml` and `frontend-*.yaml` - additional tools
+- `db.yaml` - MySQL database setup. In the cloud it should be outside of the cluster,
+  but for local setup it's fine to keep it here.
 
 ## Deploy
 

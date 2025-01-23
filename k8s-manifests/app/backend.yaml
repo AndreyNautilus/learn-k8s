@@ -21,17 +21,23 @@ spec:
               cpu: 500m
               memory: 200Mi
           env:
+            # pod identification
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            # - name: COMMENT
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: purpose
             - name: WORKER_NAME
-              value: $(POD_NAME)  # - $(COMMENT)
+              value: $(POD_NAME)
+            # db connection
+            - name: DATABASE_URL
+              value: app-db  # see db.yaml
+            - name: DATABASE_USERNAME
+              value: root  # TODO: use a different user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-db
+                  key: root-password
           image: app-backend:1.0.0
           ports:
             - name: backend
