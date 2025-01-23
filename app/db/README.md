@@ -13,7 +13,7 @@ docker build -t mysql-msgs:9.1.0 .
 Running the DB
 
 ```bash
-docker run --rm -it --name mysql --network=my-bridge -e MYSQL_ROOT_PASSWORD=root-password mysql-msg:9.1.0
+docker run --rm --name mysql --network=my-bridge -e MYSQL_ROOT_PASSWORD=root-password -p 3306:3306 mysql-msg:9.1.0
 ```
 
 and CLI:
