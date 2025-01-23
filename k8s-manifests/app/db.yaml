@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app-db
+spec:
+  serviceName: app-db
+  replicas: 1  # MUST be exactly 1
+  selector:
+    matchLabels:
+      app: app-db  # for ReplicaSet to know which pods to manage
+  template:
+    metadata:
+      labels:
+        app: app-db
+    spec:
+      containers:
+        - name: db
+          resources:
+            # requests are taken from 'kubectl top pods -n=dev' and rounded up
+            # requests are equal to limits
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-db
+                  key: root-password
+          image: mysql-msgs:9.1.0
+          ports:
+            - name: mysql
+              containerPort: 3306
+          readinessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 3
+            periodSeconds: 2
+# No persistent volumes, because it's a temporary DB
+# and it should be re-created with every deployment.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-db
+type: Opaque
+data:  # base64-encoded
+  # TODO: how to securely generate a random root password?
+  root-password: bXktc3FsLXJvb3QtcGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-db
+spec:
+  selector:
+    app: app-db
+  ports:
+    - name: mysql
+      protocol: TCP
+      port: 3306
+      targetPort: mysql  # see exposed port in container

@@ -1,11 +1,8 @@
 services:
   backend-db:
-    image: mysql:9.1.0
+    build: db
     environment:
       MYSQL_ROOT_PASSWORD: root-password
-    volumes:
-      - ./db/db.sql:/docker-entrypoint-initdb.d/db.sql
-      - ./db/test-data.sql:/docker-entrypoint-initdb.d/test-data.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
