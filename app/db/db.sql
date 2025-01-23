@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS authors (
 );
 CREATE TABLE IF NOT EXISTS posts (
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    add_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     author_id int NOT NULL REFERENCES authors (id),
     message text
 );

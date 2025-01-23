@@ -57,7 +57,7 @@ kubectl delete dev
 
 ## Generate fake load
 
-# simple low load
+### simple low load
 
 Just make a request every second. fish shell:
 
@@ -68,7 +68,7 @@ while true;
 end
 ```
 
-# high load
+### high load
 
 Use `wrk` [tool](https://github.com/wg/wrk):
 

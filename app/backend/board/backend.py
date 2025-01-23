@@ -80,16 +80,23 @@ def _fake_posts():
 def _fetch_posts(connection):
     with connection.cursor() as cursor:
         query = (
-            "SELECT authors.name AS author, posts.message AS text "
+            "SELECT authors.name AS author, posts.message AS text , posts.add_timestamp "
             "FROM posts "
             "INNER JOIN authors "
-            "ON posts.author_id = authors.id"
+            "ON posts.author_id = authors.id "
+            "ORDER BY posts.add_timestamp DESC"
         )
         cursor.execute(query)
 
         posts = []
-        for author, message in cursor:
-            posts.append({"author": author, "text": message})
+        for author, message, timestamp in cursor:
+            posts.append(
+                {
+                    "author": author,
+                    "text": message,
+                    "timestamp": timestamp.strftime("%m/%d/%Y - %H:%M:%S"),
+                }
+            )
 
         return posts
 

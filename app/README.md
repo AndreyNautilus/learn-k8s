@@ -6,7 +6,12 @@
 ## Run via docker-compose
 
 ```bash
-docker-compose up
+docker-compose watch
+# or
+docker-compose up --build
+
+# and at the end
+docker-compose down
 ```
 
 Double Ctrl+C to "down" the compose.

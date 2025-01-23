@@ -12,7 +12,7 @@
 {% endif %}
 {% for post in posts %}
   <p>
-    <b>{{ post['author'] }}:</b> {{ post['text'] }}
+    <b>{{ post['author'] }}</b> [{{ post['timestamp'] }}]<b>:</b> {{ post['text'] }}
   </p>
 {% endfor %}
   <p>

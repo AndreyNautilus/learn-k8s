@@ -5,7 +5,7 @@ INSERT INTO authors (name) VALUES
 ('user2'),
 ('user3');
 
-INSERT INTO posts (author_id, message) VALUES
-(1, 'message1'),
-(2, 'message2'),
-(3, 'message3');
+INSERT INTO posts (add_timestamp, author_id, message) VALUES
+(current_timestamp() - 1, 1, 'message1'),
+(current_timestamp() - 2, 2, 'message2'),
+(current_timestamp() - 3, 3, 'message3');

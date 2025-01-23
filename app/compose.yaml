@@ -1,6 +1,10 @@
 services:
   backend-db:
     build: db
+    develop:
+      watch:
+        - action: rebuild
+          path: db
     environment:
       MYSQL_ROOT_PASSWORD: root-password
     healthcheck:
@@ -11,6 +15,10 @@ services:
       start_period: 5s
   backend:
     build: backend
+    develop:
+      watch:
+        - action: rebuild
+          path: backend/board
     depends_on:
       backend-db:
         condition: service_healthy
@@ -24,6 +32,10 @@ services:
       - "8001:8000"  # expose port to host
   frontend:
     build: frontend
+    develop:
+      watch:
+        - action: rebuild
+          path: frontend/board
     environment:
       BACKEND_ENDPOINT: "http://backend:8000"  # uses the original (not exposed) port
     ports:
