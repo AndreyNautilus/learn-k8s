@@ -24,6 +24,7 @@ def info():
     return result
 
 
+# TODO: separate endpoints for adding a new post and getting all posts
 @backend_bp.route("/posts", methods=("GET", "POST"))
 def posts():
     if request.method == "GET":
