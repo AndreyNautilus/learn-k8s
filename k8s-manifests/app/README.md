@@ -35,4 +35,5 @@ Ingress serves just on localhost:
 
 ```bash
 curl localhost  # should return home page html
+curl localhost/api/posts  # should return posts in JSON format
 ```
