@@ -8,11 +8,12 @@ flowchart LR
 
     subgraph cluster
         direction LR
-        frontend --> backend
+        frontend -.-> backend
         backend --> app_db
     end
 
-    traffic[http localhost] --> cluster
+    traffic[http localhost] -- ingress --> frontend
+    traffic_api[http localhost/api] -- ingress --> backend
 ```
 
 - `backend.yaml` and `frontend.yaml` - deployments and services for backend and frontend
@@ -35,4 +36,5 @@ Ingress serves just on localhost:
 
 ```bash
 curl localhost  # should return home page html
+curl localhost/api/posts  # should return posts in JSON format
 ```
