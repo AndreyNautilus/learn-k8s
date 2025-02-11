@@ -8,11 +8,12 @@ flowchart LR
 
     subgraph cluster
         direction LR
-        frontend --> backend
+        frontend -.-> backend
         backend --> app_db
     end
 
-    traffic[http localhost] --> cluster
+    traffic[http localhost] -- ingress --> frontend
+    traffic_api[http localhost/api] -- ingress --> backend
 ```
 
 - `backend.yaml` and `frontend.yaml` - deployments and services for backend and frontend
