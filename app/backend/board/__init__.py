@@ -1,7 +1,10 @@
 from flask import Flask
+from prometheus_flask_exporter import PrometheusMetrics
 
 from board import backend
 from board import stress
+
+metrics = PrometheusMetrics.for_app_factory()
 
 
 def create_app():
@@ -16,5 +19,7 @@ def create_app():
 
     app.register_blueprint(backend.backend_bp)
     app.register_blueprint(stress.stress_bp)
+
+    metrics.init_app(app)
 
     return app
