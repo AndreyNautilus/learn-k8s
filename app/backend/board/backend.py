@@ -6,15 +6,10 @@ import pymysql.cursors
 backend_bp = Blueprint("backend", __name__)
 
 
+@backend_bp.route("/", methods=("GET",))
 @backend_bp.route("/info", methods=("GET",))
 def info():
-    time_msg = datetime.now().strftime("%m/%d/%Y - %H:%M:%S")
-    worker = current_app.config["WORKER_NAME"]
-
-    result = {
-        "time": time_msg,
-        "worker": worker,
-    }
+    result = _info()
 
     for key, value in request.args.items():
         safe_key = urllib.parse.unquote_plus(key)
@@ -22,6 +17,15 @@ def info():
         result.setdefault("params", {})[safe_key] = safe_value
 
     return result
+
+
+def _info():
+    time_msg = datetime.now().strftime("%m/%d/%Y - %H:%M:%S")
+    worker = current_app.config["WORKER_NAME"]
+    return {
+        "time": time_msg,
+        "worker": worker,
+    }
 
 
 # TODO: separate endpoints for adding a new post and getting all posts
