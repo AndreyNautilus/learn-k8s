@@ -36,7 +36,7 @@ docker build -t app-backend:1.0.0 .
 Run:
 
 ```bash
-docker run --rm -it -p 127.0.0.1:8001:8000/tcp --name backend -e WORKER_NAME="local_dev" app-backend:1.0.0
+docker run --rm -it -p 8001:8000/tcp --name backend -e WORKER_NAME="local_dev" app-backend:1.0.0
 ```
 
 ## Tests
