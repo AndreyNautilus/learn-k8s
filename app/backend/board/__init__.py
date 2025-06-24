@@ -9,12 +9,6 @@ def create_app():
 
     app.config.from_pyfile("config.py")
 
-    # print(f"db url: {app.config['DATABASE_URL']}")
-    # print(f"db port: {app.config['DATABASE_PORT']}")
-    # print(f"db name: {app.config['DATABASE_NAME']}")
-    # print(f"db username: {app.config['DATABASE_USERNAME']}")
-    # print(f"db password: {app.config['DATABASE_PASSWORD']}")
-
     if not app.config["DATABASE_PORT"].isnumeric():
         raise RuntimeError("DATABASE_PORT must be numeric")
 
