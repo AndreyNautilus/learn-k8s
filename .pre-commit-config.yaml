@@ -56,3 +56,4 @@ repos:
   # TODO:
   # dockerfile lint
   # k8s manifests lint: https://github.com/stackrox/kube-linter
+  # JS lint for frontend-vue

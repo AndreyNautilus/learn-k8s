@@ -11,10 +11,12 @@ docker-compose watch
 docker-compose up --build
 
 # and at the end
-docker-compose down
+docker-compose down  # or Ctrl+C
 ```
 
-Double Ctrl+C to "down" the compose.
+Double Ctrl+C to force-"down" the compose.
+
+Compose runs NGINX as reverse proxy to route traffic (see config file).
 
 ## Run containers manually
 

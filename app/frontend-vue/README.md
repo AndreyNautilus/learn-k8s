@@ -1,12 +1,11 @@
 # frontend
 
-Vue3 + Vite
+Vue3 + Vite + nginx
 
 ## Project setup
 
-```
-npm install
-```
+- install `nodejs` and `npm`
+- `npm install` to install all deps;
 
 ### Local commands
 
@@ -20,6 +19,8 @@ npm install
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Docker
+
+Uses `nginx` as webserver.
 
 Build:
 
