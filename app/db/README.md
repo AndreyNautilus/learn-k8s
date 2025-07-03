@@ -1,5 +1,7 @@
 # Backend MySQL database
 
+Temporary Database image. Works for the playground.
+
 Base image: https://hub.docker.com/_/mysql
 Dockerfile copies init scripts into `/docker-entrypoint-initdb.d/`
 which will init the DB on the first start.

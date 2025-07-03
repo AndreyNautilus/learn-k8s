@@ -31,15 +31,22 @@ services:
     ports:
       - "8001:8000"  # expose port to host
   frontend:
-    build: frontend
+    build: frontend-vue
     develop:
       watch:
         - action: rebuild
-          path: frontend/board
-    environment:
-      BACKEND_ENDPOINT: "http://backend:8000"  # uses the original (not exposed) port
+          path: frontend-vue
     ports:
-      - "8000:8000"
+      - "8002:8000"  # expose port to host
+  nginx-reverse-proxy:
+    # Routes traffic to backend and frontend based on the request path
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-rev-proxy.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
   backend-load:
     image: busybox
     depends_on:
@@ -55,4 +62,4 @@ services:
     command:
       - sh
       - -c
-      - while true; do wget -Sq -O- http://frontend:8000/about >> /dev/null; sleep 5; done
+      - while true; do  wget -Sq -O- http://frontend:8000/ 2>&1 | grep HTTP; sleep 5; done

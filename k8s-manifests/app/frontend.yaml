@@ -21,34 +21,19 @@ spec:
               # equal to requests
               cpu: 100m
               memory: 100Mi
-          env:
-            - name: BACKEND_ENDPOINT
-              value: "http://app-backend:8000"
-              # - name: BACKEND_USERNAME
-              #   valueFrom:
-              #     secretKeyRef:
-              #       key: username
-              #       name: app-secret
-              # - name: BACKEND_PASSWORD
-              #   valueFrom:
-              #     secretKeyRef:
-              #       key: password
-              #       name: app-secret
-              # - name: BACKEND_SECRET
-              #   value: $(BACKEND_USERNAME)/$(BACKEND_PASSWORD)
-          image: app-frontend:1.0.0
+          image: app-frontend-vue:1.0.0
           ports:
             - name: frontend
               containerPort: 8000
           startupProbe:
             httpGet:
-              path: /about
+              path: /
               port: frontend
             failureThreshold: 30
             periodSeconds: 2
           livenessProbe:
             httpGet:
-              path: /about
+              path: /
               port: frontend
             failureThreshold: 1  # consider dead after first failure
             periodSeconds: 10
