@@ -65,5 +65,5 @@ spec:
   ports:
     - name: backend
       protocol: TCP
-      port: 8000
+      port: 80
       targetPort: backend  # see exposed port in container
