@@ -9,14 +9,15 @@ Vue3 + Vite + nginx
 
 ### Local commands
 
-- `npm run dev` - run local server with hot reload;
+- `npm run dev` - run local server with hot reload (routes `/api/` requests to `localhost:8001`, see `vite.config.js`);
 - `npm run build` - compile the prod;
 - `npm run serve` - preview the prod locally;
 - `npm run lint` - lint files
 
-### Customize configuration
+### Using local backend
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- (optionally) start `DB` container;
+- start `backend` container and (optionally) connect it to the `DB` container;
 
 ## Docker
 
