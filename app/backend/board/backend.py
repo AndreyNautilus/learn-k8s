@@ -71,9 +71,9 @@ def _get_posts():
 
 def _fake_posts():
     posts = [
-        {"author": "fake user 1", "text": "fake text 1"},
-        {"author": "fake user 2", "text": "fake text 2"},
-        {"author": "fake user 3", "text": "fake text 3"},
+        {"author": "fake backend user 1", "text": "fake backend text 1"},
+        {"author": "fake backend user 2", "text": "fake backend text 2"},
+        {"author": "fake backend user 3", "text": "fake backend text 3"},
     ]
     return posts
 
