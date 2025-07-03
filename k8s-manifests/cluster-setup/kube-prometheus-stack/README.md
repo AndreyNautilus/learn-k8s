@@ -12,9 +12,15 @@ helm repo update
 helm install prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
 ```
 
+### (Optional) Deploy ingresses for simple access
+
+```bash
+kubectl -n monitoring apply -f .
+```
+
 ## Access
 
-Use port-forwarding.
+Port-forwarding or via ingres (if deployed).
 
 ```bash
 $ kubectl get svc -n monitoring
@@ -40,6 +46,8 @@ kubectl port-forward -n monitoring svc/prometheus-operated 9090:9090
 
 And go to `localhost:9090` to access prometheus UI.
 
+**Ingress**: `prometheus.localhost`.
+
 ### Grafana
 
 ```bash
@@ -47,4 +55,8 @@ kubectl port-forward -n monitoring svc/prometheus-stack-grafana 3000:80
 ```
 
 And go to `localhost:3000` to access Grafana UI.
-Usename: `admin`, password is in `kubectl get -n monitoring secret prometheus-stack-grafana -o yaml` (then `base64 -d`).
+
+**Ingress**: `grafana.localhost`.
+
+- usename: `admin`
+- password: `prom-operator` (it's in `kubectl get -n monitoring secret prometheus-stack-grafana -o yaml` then `base64 -d`).
