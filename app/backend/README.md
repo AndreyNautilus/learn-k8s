@@ -1,6 +1,7 @@
 # Backend
 
 Written in python using [flask](https://flask.palletsprojects.com/en/3.0.x/).
+[Exposed via](https://flask.palletsprojects.com/en/stable/deploying/gunicorn/) `gunicorn`.
 
 ## Setup
 
@@ -42,3 +43,5 @@ docker run --rm -it -p 8001:8000/tcp --name backend -e WORKER_NAME="local_dev" a
 ## Tests
 
 `pytest` will run all tests.
+
+## Metrics
