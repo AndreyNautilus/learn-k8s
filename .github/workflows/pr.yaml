@@ -35,8 +35,6 @@ jobs:
           -r app/backend/requirements-dev.txt
       - name: pytest
         env:
-          PROMETHEUS_MULTIPROC_DIR: tmp  # no heading slash
-        run: |
-          mkdir tmp
-          pytest -v
+          PROMETHEUS_MULTIPROC_DIR: ${{ runner.temp }}
+        run: pytest -v
         working-directory: app/backend
