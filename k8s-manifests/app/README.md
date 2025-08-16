@@ -21,6 +21,10 @@ flowchart LR
 - `db.yaml` - MySQL database setup. In the cloud it should be outside of the cluster,
   but for local setup it's fine to keep it here.
 
+## Requirements
+
+See [cluster setup](../cluster-setup/README.md).
+
 ## Deploy
 
 ```bash
