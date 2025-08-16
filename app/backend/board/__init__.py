@@ -2,6 +2,7 @@ from flask import Flask
 
 from board import backend
 from board import stress
+from board.metrics import metrics, metric_count_by_path
 
 
 def create_app():
@@ -16,5 +17,8 @@ def create_app():
 
     app.register_blueprint(backend.backend_bp)
     app.register_blueprint(stress.stress_bp)
+
+    metrics.register_default(metric_count_by_path, app=app)
+    metrics.init_app(app)
 
     return app
