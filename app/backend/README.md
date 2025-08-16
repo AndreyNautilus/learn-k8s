@@ -42,6 +42,13 @@ docker run --rm -it -p 8001:8000/tcp --name backend -e WORKER_NAME="local_dev" a
 
 ## Tests
 
-`pytest` will run all tests.
+win:
+
+```bash
+$env:PROMETHEUS_MULTIPROC_DIR=$env:temp; pytest -v
+```
 
 ## Metrics
+
+Using [prometheus_flask_exporter](https://github.com/rycus86/prometheus_flask_exporter).
+Exposed on `/metrics` endpoint.
