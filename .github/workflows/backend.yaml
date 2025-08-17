@@ -22,6 +22,8 @@ jobs:
 
   docker-backend:
     runs-on: ubuntu-latest
+    env:
+      CONTAINER_NAME: backend
     steps:
       - uses: actions/checkout@v4
       - name: Build the image
@@ -31,12 +33,14 @@ jobs:
       - name: Run the image (demon mode)
         id: run-image
         run: >
-          docker run --rm --detach --port 8001:8000/tcp --name backend -e WORKER_NAME="local_dev"
+          docker run --rm --detach -p 8000:8000/tcp
+          --name ${{ env.CONTAINER_NAME }}
+          -e WORKER_NAME="local_dev"
           app-backend:ci
       - name: Check endpoints
         run: |
-          wget -q -O- http://app-backend:8000/info
+          wget -q -O- http://localhost:8000/info
       - name: Stop image
         if: always() && steps.run-image.outcome == 'success'
         run: |
-          docker stop backend
+          docker stop ${{ env.CONTAINER_NAME }}
