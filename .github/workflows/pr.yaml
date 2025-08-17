@@ -23,18 +23,5 @@ jobs:
         run: |
           pre-commit run --all-files
 
-  pytest-backend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - name: Install dependencies
-        run: >
-          python -m pip install
-          -r app/backend/requirements.txt
-          -r app/backend/requirements-dev.txt
-      - name: pytest
-        env:
-          PROMETHEUS_MULTIPROC_DIR: ${{ runner.temp }}
-        run: pytest -v
-        working-directory: app/backend
+  check-backend:
+    uses: ./.github/workflows/backend.yaml
