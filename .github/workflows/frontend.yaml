@@ -46,7 +46,10 @@ jobs:
       - name: Check endpoints
         # TODO: switch to bruno CLI
         run: |
-          wget -q -O- http://localhost:8000/
+          HTTP_CODE=$(wget -Sq -O- http://localhost:8000/ 2>&1 | grep HTTP)
+          if [ "$HTTP_CODE" != "200" ]; then
+            exit 1
+          fi
       - name: Stop the container
         if: always() && steps.run-image.outcome == 'success'
         run: |
