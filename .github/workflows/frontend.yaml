@@ -47,6 +47,7 @@ jobs:
         # TODO: switch to bruno CLI
         run: |
           HTTP_CODE=$(wget -Sq -O- http://localhost:8000/ 2>&1 | grep HTTP)
+          echo $HTTP_CODE
           if [ "$HTTP_CODE" != "200" ]; then
             exit 1
           fi
