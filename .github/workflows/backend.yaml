@@ -1,0 +1,42 @@
+name: Build and test backend
+
+on:
+  workflow_call:
+
+jobs:
+  pytest-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: Install dependencies
+        run: >
+          python -m pip install
+          -r app/backend/requirements.txt
+          -r app/backend/requirements-dev.txt
+      - name: pytest
+        env:
+          PROMETHEUS_MULTIPROC_DIR: ${{ runner.temp }}
+        run: pytest -v
+        working-directory: app/backend
+
+  docker-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the image
+        run: |
+          docker build -t app-backend:ci .
+        working-directory: app/backend
+      - name: Run the image (demon mode)
+        id: run-image
+        run: >
+          docker run -rm --detach --port 8001:8000/tcp --name backend -e WORKER_NAME="local_dev"
+          app-backend:ci
+      - name: Check endpoints
+        run: |
+          wget -q -O- http://app-backend:8000/info
+      - name: Stop image
+        if: always() && steps.run-image.outcome == 'success'
+        run: |
+          docker stop backend

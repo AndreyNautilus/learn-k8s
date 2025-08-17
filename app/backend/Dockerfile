@@ -1,12 +1,23 @@
-FROM python:3.12
+# Building stage
+FROM python:3.12 AS builder
 
 # TODO: split build into multiple stages
 
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN python -m venv /opt/venv && \
+    . /opt/venv/bin/activate && \
+    pip install --no-cache-dir -r /app/requirements.txt
 
 COPY gunicorn.conf.py /app/
 COPY board /app/board
+
+# Final image
+FROM python:3.12-slim
+
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin/:$PATH"
+
+COPY --from=builder /app /app
 
 # for configurability
 ENV SERVICE_PORT=8000
