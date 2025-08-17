@@ -1,7 +1,5 @@
 # Building stage
-FROM python:3.12 AS builder
-
-# TODO: split build into multiple stages
+FROM python:3.12 AS build-stage
 
 COPY requirements.txt /app/
 RUN python -m venv /opt/venv && \
@@ -14,10 +12,10 @@ COPY board /app/board
 # Final image
 FROM python:3.12-slim
 
-COPY --from=builder /opt/venv /opt/venv
+COPY --from=build-stage /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin/:$PATH"
 
-COPY --from=builder /app /app
+COPY --from=build-stage /app /app
 
 # for configurability
 ENV SERVICE_PORT=8000
