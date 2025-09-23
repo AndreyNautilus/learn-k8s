@@ -1,3 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-backend-config
+data:
+  url: app-db  # see db.yaml
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-backend-secret
+type: Opaque
+data:  # base64-encoded, not encrypted
+  db-username: YmFja2VuZA==
+  # TODO: how to securely generate a random root password?
+  db-password: bXktc3FsLWJhY2tlbmQtcGFzc3dvcmQ=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,14 +49,20 @@ spec:
               value: $(POD_NAME)
             # db connection
             - name: DATABASE_URL
-              value: app-db  # see db.yaml
+              valueFrom:
+                configMapKeyRef:
+                  name: app-backend-config
+                  key: url
             - name: DATABASE_USERNAME
-              value: root  # TODO: use a different user
+              valueFrom:
+                secretKeyRef:
+                  name: app-backend-secret
+                  key: db-username
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: app-db
-                  key: root-password
+                  name: app-backend-secret
+                  key: db-password
           image: app-backend:1.0.0
           ports:
             - name: web

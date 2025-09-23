@@ -1,0 +1,5 @@
+-- filename must not end with '.sql'/'.sh'/'.sql.gz' to prevent automatic execution
+USE msgs;
+
+CREATE USER IF NOT EXISTS 'backend'@'%' IDENTIFIED BY '${BACKEND_PASSWORD}';
+GRANT ALL PRIVILEGES ON msgs.* TO 'backend'@'%';
