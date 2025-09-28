@@ -29,7 +29,7 @@ mysql> source /schema/2-test-data.sql
 and CLI (as user):
 
 ```bash
-docker run --rm -it --network=my-bridge -v db:/schema mysql:9.1.0 mysql -hmysql -ubackend -pbackend_password
+docker run --rm -it --network=my-bridge -v db:/schema mysql:9.1.0 mysql -hmysql -Dmsgs -ubackend -pbackend_password
 ```
 
 then:

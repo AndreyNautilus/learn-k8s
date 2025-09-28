@@ -2,4 +2,4 @@
 USE msgs;
 
 CREATE USER IF NOT EXISTS 'backend'@'%' IDENTIFIED BY '${BACKEND_PASSWORD}';
-GRANT ALL PRIVILEGES ON msgs.* TO 'backend'@'%';
+GRANT SELECT, INSERT ON msgs.* TO 'backend'@'%';

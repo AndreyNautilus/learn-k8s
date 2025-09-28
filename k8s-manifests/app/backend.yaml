@@ -12,7 +12,7 @@ metadata:
 type: Opaque
 data:  # base64-encoded, not encrypted
   db-username: YmFja2VuZA==
-  # TODO: how to securely generate a random root password?
+  # TODO: how to securely generate a random password?
   db-password: bXktc3FsLWJhY2tlbmQtcGFzc3dvcmQ=
 ---
 apiVersion: apps/v1
