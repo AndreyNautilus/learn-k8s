@@ -15,26 +15,27 @@ docker build -t mysql-msgs:9.1.0 .
 Running the DB
 
 ```bash
-docker run --rm --name mysql --network=my-bridge -e MYSQL_ROOT_PASSWORD=root-password -p 3306:3306 mysql-msg:9.1.0
+docker run --rm --name mysql --network=my-bridge -e MYSQL_ROOT_PASSWORD=root-password -e MYSQL_BACKEND_PASSWORD=backend_password -p 3306:3306 mysql-msgs:9.1.0
 ```
 
-and CLI:
+and CLI in a separate container:
 
 ```bash
-$ docker run --rm -it --network=my-bridge -v db:/schema mysql:9.1.0 mysql -hmysql -uroot -proot-password
-mysql> source /schema/db.sql
-mysql> source /schema/test-data.sql
+docker run --rm -it --network=my-bridge -v db:/schema mysql:9.1.0 mysql -hmysql -Dmsgs -ubackend -pbackend_password
+# or as root user
+docker run --rm -it --network=my-bridge -v db:/schema mysql:9.1.0 mysql -hmysql -Dmsgs -uroot -proot-password
 ```
 
 then:
 
 ```sql
 SHOW databases;
-USE msgs;
 SELECT * FROM posts;
 ```
 
 ## Schema
 
-- `db.sql` - main schema
-- `test_data.sql` - the test data to push into DB
+- `1-db.sql` - main schema
+- `2-test_data.sql` - the test data to push into DB
+- `3-create-users.sh` + `create-users.sql.template` - create additional users
+  (`sed` replaces the password in the template file and pipes to `mysql` CLI)

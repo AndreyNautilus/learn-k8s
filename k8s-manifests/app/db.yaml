@@ -27,6 +27,11 @@ spec:
                 secretKeyRef:
                   name: app-db
                   key: root-password
+            - name: MYSQL_BACKEND_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-backend-secret
+                  key: db-password
           image: mysql-msgs:9.1.0
           ports:
             - name: mysql
@@ -48,7 +53,7 @@ kind: Secret
 metadata:
   name: app-db
 type: Opaque
-data:  # base64-encoded
+data:  # base64-encoded, not encrypted
   # TODO: how to securely generate a random root password?
   root-password: bXktc3FsLXJvb3QtcGFzc3dvcmQ=
 ---
