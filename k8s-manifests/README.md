@@ -1,4 +1,4 @@
-# K8s manifests
+# Kubernetes manifests
 
 ## Preparation
 
@@ -8,13 +8,7 @@ Cluster should include required tools, see [cluster-setup](cluster-setup/README.
 
 ## Deploy and verify
 
-```bash
-kubectl create configmap app-flask-config --from-env-file=configmap/app-flask-py.properties
-kubectl apply -f namespace.yaml -f deployment.yaml -f service.yaml
-kubectl get deploy -n=dev
-kubectl get pod -n=dev
-kubectl get service -n=dev
-```
+See [README in app folder](app/README.md).
 
 ## Debug
 
