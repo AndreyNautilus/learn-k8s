@@ -1,6 +1,7 @@
 # k8s metrics-server
 
 GitHub: https://github.com/kubernetes-sigs/metrics-server
+
 Helm chart: https://artifacthub.io/packages/helm/metrics-server/metrics-server
 
 See installation guide in the chart docs.
