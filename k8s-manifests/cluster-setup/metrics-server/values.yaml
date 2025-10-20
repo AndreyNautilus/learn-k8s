@@ -1,0 +1,8 @@
+args:
+  # metrics-server queries data from kubelet endpoints via https.
+  # metrics-server requires the kubelet certificates to be signed by the cluster CA,
+  # but in local  kubelets use self-signed certificates
+  # which will be rejected by the metrics-server.
+  # We need to instruct metrics-server to accept such certificates.
+  # See: https://github.com/kubernetes-sigs/metrics-server/blob/master/README.md#requirements
+  - --kubelet-insecure-tls
