@@ -23,3 +23,16 @@ kubectl -n ingress-nginx get all
 kubectl get ingressclasses
 # should list 'nginx' Ingress Class. It's used in the app deployment
 ```
+
+## For kind cluster
+
+kind has a dedicated [nginx-ingress setup](https://kind.sigs.k8s.io/docs/user/ingress/).
+[Install it](https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx) and
+patch the `ingress-nginx-controller` deployments to select control-plane node only
+(because only that node has extra port forwarding, see `kind-cluster.yaml` config):
+
+```bash
+kubectl -n ingress-nginx edit deployment ingress-nginx-controller
+```
+
+and add `kubernetes.io/hostname: kind-messages-control-plane` to the `nodeSelector` of the pods.
