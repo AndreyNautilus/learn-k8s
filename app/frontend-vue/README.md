@@ -26,7 +26,10 @@ Uses `nginx` as webserver.
 Build:
 
 ```bash
+# using raw docker
 docker build -t app-frontend-vue:1.0.0 .
+# using Docker BuildX (env can be omitted when using default version)
+$env:FRONTEND_VERSION="1.0.1"; docker buildx bake --load
 ```
 
 Run:

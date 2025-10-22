@@ -9,7 +9,10 @@ which will init the DB on the first start.
 Building:
 
 ```bash
+# using raw docker
 docker build -t mysql-msgs:9.1.0 .
+# using Docker BuildX (env can be omitted when using default version)
+$env:DB_VERSION="1.0.1"; docker buildx bake --load
 ```
 
 Running the DB
