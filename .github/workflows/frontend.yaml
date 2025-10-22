@@ -29,14 +29,19 @@ jobs:
     needs:
       - js-checks  # no point in testing the image if the functionality is broken
     env:
-      IMAGE_TAG: "app-frontend:ci"
+      FRONTEND_VERSION: ci
+      IMAGE_TAG: "app-frontend:${FRONTEND_VERSION}"
       CONTAINER_NAME: frontend
     steps:
       - uses: actions/checkout@v4
-      - name: Build the image
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build images
         run: |
-          docker build -t ${{ env.IMAGE_TAG }} .
+          docker buildx bake --load
         working-directory: app/frontend-vue
+
       - name: Run the image (in detach mode)
         id: run-image
         run: >

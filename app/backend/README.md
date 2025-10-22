@@ -31,7 +31,10 @@ WORKER_NAME="local_dev" python -m flask --app=board run --port=8001 --debug
 Build:
 
 ```bash
+# using raw docker
 docker build -t app-backend:1.0.0 .
+# using Docker BuildX (env can be omitted when using default version)
+$env:BACKEND_VERSION="1.0.1"; docker buildx bake --load
 ```
 
 Run:
