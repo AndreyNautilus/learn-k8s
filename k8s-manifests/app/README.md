@@ -25,6 +25,12 @@ flowchart LR
 
 See [cluster setup](../cluster-setup/README.md).
 
+Create `dev` namespace:
+
+```bash
+kubectl create ns dev
+```
+
 ## Deploy
 
 ```bash

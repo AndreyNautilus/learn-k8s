@@ -9,5 +9,5 @@ variable "FRONTEND_VERSION" {
 target "frontend" {
   context    = "."
   dockerfile = "Dockerfile"
-  tags       = ["app-frontend:${FRONTEND_VERSION}"]
+  tags       = ["app-frontend-vue:${FRONTEND_VERSION}"]
 }

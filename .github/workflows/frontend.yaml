@@ -30,7 +30,7 @@ jobs:
       - js-checks  # no point in testing the image if the functionality is broken
     env:
       FRONTEND_VERSION: ci
-      IMAGE_TAG: "app-frontend:${FRONTEND_VERSION}"
+      IMAGE_TAG: "app-frontend-vue:${FRONTEND_VERSION}"
       CONTAINER_NAME: frontend
     steps:
       - uses: actions/checkout@v4
