@@ -39,6 +39,13 @@ spec:
               port: frontend
             failureThreshold: 1  # consider dead after first failure
             periodSeconds: 10
+        - name: nginx-prometheus-exporter
+          image: nginx/nginx-prometheus-exporter:1.5.1
+          ports:
+            - name: metrics
+              containerPort: 9113
+          args:
+            - --nginx.scrape-uri=http://127.0.0.1:8000/stub_status
 ---
 apiVersion: v1
 kind: Service
@@ -54,3 +61,7 @@ spec:
       protocol: TCP
       port: 80
       targetPort: frontend  # see exposed port in container
+    - name: metrics
+      protocol: TCP
+      port: 9113
+      targetPort: metrics  # see exposed port in container
