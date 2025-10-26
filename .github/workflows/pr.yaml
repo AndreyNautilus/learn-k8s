@@ -28,3 +28,23 @@ jobs:
 
   check-frontend:
     uses: ./.github/workflows/frontend.yaml
+
+  conclusion:
+    name: Conclusion
+    needs:
+      # list all verification jobs here
+      - pre-commit
+      - check-backend
+      - check-frontend
+    if: always()
+    runs-on: ubuntu-latest
+    env:
+      HAS_FAILURE: ${{ contains(needs.*.outcome, 'failure') }}
+    steps:
+      - name: Report failure
+        if: env.HAS_FAILURE == 'true'
+        run: |
+          echo "Some jobs failed"
+          exit 1
+      - name: Report success
+        run: echo "no failures"
